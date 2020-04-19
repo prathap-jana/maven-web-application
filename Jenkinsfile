@@ -8,12 +8,12 @@ node
  	git branch: 'development', credentialsId: 'bed5a851-d84d-412e-87e7-bf9ce23c0e0e', url: 'https://github.com/MithunTechnologiesDevOps/maven-web-application.git'
  
  }
- /*
+ 
  stage('Build')
  {
  sh  "${mavenHome}/bin/mvn clean package"
  }
- 
+ /*
  stage('ExecuteSoanrQubeReport')
  {
  sh  "${mavenHome}/bin/mvn sonar:sonar"
