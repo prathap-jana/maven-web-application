@@ -1,42 +1,46 @@
 node
 {
 
-  def mavenHome=tool name: "maven3.6.3"
-  
- stage('Checkout')
- {
- 	git branch: 'development', credentialsId: 'bed5a851-d84d-412e-87e7-bf9ce23c0e0e', url: 'https://github.com/MithunTechnologiesDevOps/maven-web-application.git'
- 
- }
+def mavenHome=tool name: "maven-3.6.3"
 
- stage('Build')
- {
- sh  "${mavenHome}/bin/mvn clean package"
- }
-  /*
- stage('ExecuteSoanrQubeReport')
- {
- sh  "${mavenHome}/bin/mvn sonar:sonar"
- }
- 
- stage('UploadArtifactintoNexus')
- {
- sh  "${mavenHome}/bin/mvn deploy"
- }
- 
- stage('DeployAppintoTomcat')
- {
- sshagent(['cd93d61f-2d0f-4c60-8b33-34cf4fa888b0']) {
-  sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.235.132.183:/opt/apache-tomcat-9.0.29/webapps/"
- }
- }
+echo "github BranchName ${env.BRANCH_NAME}"
+echo "Job Number ${env.BUILD_NUMBER}"
+echo "Job Name ${env.JOB_NAME}"
+
+
+properties([[$class: 'JiraProjectProperty'], buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), pipelineTriggers([pollSCM('* * * * *')])])
+    
+stage('github')
+{
+    git branch: 'development', credentialsId: 'fb389119-b90a-4eb0-aba2-414a22cd84e2', url: 'https://github.com/prathap-jana/maven-web-application.git'
+}
+
+stage('build')
+{
+    sh "${mavenHome}/bin/mvn clean package"
+}
+/*
+stage('sonarqube')
+{
+    sh "${mavenHome}/bin/mvn sonar:sonar"
+}
+
+stage('nexus')
+{
+    sh "${mavenHome}/bin/mvn deploy"
+}
+
+
+
+stage('tomact')
+{
+
+sshagent(['cc077986-93c8-49a5-8e7e-ad82222124f8']) {
+    
+    sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.233.20.94://opt/apache-tomcat-9.0.31/webapps/"
+}
+
+}
 */
- stage('SendEmailNotification')
- {
- emailext body: '''Build is over..
 
- Regards,
-Prathap
-
- }
 }
