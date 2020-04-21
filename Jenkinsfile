@@ -2,13 +2,15 @@ node
 {
 
 def mavenHome=tool name: "maven-3.6.3"
-
+/*
 echo "github BranchName ${env.BRANCH_NAME}"
 echo "Job Number ${env.BUILD_NUMBER}"
 echo "Job Name ${env.JOB_NAME}"
 
 
 properties([[$class: 'JiraProjectProperty'], buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')), pipelineTriggers([pollSCM('* * * * *')])])
+*/
+    
     
 stage('github')
 {
