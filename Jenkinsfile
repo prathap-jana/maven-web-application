@@ -2,6 +2,7 @@ node
 {
 
 def mavenHome=tool name: "maven-3.6.3"
+def buildno = BUILD_NUMBER
 /*
 echo "github BranchName ${env.BRANCH_NAME}"
 echo "Job Number ${env.BUILD_NUMBER}"
@@ -21,6 +22,13 @@ stage('build')
 {
     sh "${mavenHome}/bin/mvn clean package"
 }
+    
+ stage('Build Docker Image')
+    
+    {
+        sh "docker build -t prathapdockerhub/java-web-app-docker:${buildno}" 
+    }
+ 
 /*
 stage('sonarqube')
 {
