@@ -39,7 +39,13 @@ stage('build')
       
      } 
     
-    
+   stage('Deploy Docker Image In Server')
+    {
+        sshagent(['Docker_Dev_Server_SSH']) {
+          sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.42.200 docker rm -f javawebappcontainer || true" 
+          sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.42.200 docker run  -d -p 8080:8080 --name javawebappcontainer push prathapdockerhub/java-web-app-docker:${buildno}" 
+       }
+    }
 /*
 stage('sonarqube')
 {
