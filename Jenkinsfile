@@ -26,7 +26,7 @@ stage('build')
  stage('Build Docker Image')
     
     {
-        sh "docker build -t prathapdockerhub/java-web-app-docker:${buildno}" 
+        sh "docker build -t prathapdockerhub/java-web-app-docker:${buildno} ." 
     }
  
 /*
