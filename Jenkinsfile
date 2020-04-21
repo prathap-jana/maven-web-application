@@ -29,6 +29,17 @@ stage('build')
         sh "docker build -t prathapdockerhub/java-web-app-docker:${buildno} ." 
     }
  
+   stage('Push Docker Image')
+    {
+        withCredentials([string(credentialsId: 'Docker_Hub_Pwd', variable: 'Docker_Hub_Pwd')]) {
+           sh "docker login -u prathapdockerhub -p ${Docker_Hub_Pwd}"
+        
+       }
+           sh "docker push prathapdockerhub/java-web-app-docker:${buildno}"
+      
+     } 
+    
+    
 /*
 stage('sonarqube')
 {
